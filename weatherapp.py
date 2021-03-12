@@ -13,7 +13,7 @@ accu_request = Request (ACCU_URL, headers=headers)
 accu_page = urlopen (accu_request).read()
 accu_page = str (accu_page)
 
-accu_temp_tag = '<span class="after-temp">'
+accu_temp_tag = '<div class="temp">'
 accu_temp_tag_size = len (accu_temp_tag)
 accu_temp_tag_index = accu_page.find (accu_temp_tag)
 accu_temp_value_start = accu_temp_tag_index + accu_temp_tag_size
@@ -23,11 +23,23 @@ for char in accu_page [accu_temp_value_start:]:
 		accu_temp += char
 	else:
 		break
-	 
+
+accu_phrase_tag = '<span class="phrase">'	 
+accu_phrase_tag_size = len (accu_phrase_tag)
+accu_phrase_tag_index = accu_page.find (accu_phrase_tag)
+accu_phrase_value_start = accu_phrase_tag_index + accu_phrase_tag_size
+accu_phrase = ''
+for char_phrase in accu_page [accu_phrase_value_start:]:
+	if char_phrase != '<':
+		accu_phrase += char_phrase
+	else:
+		break 
+
+
 
 print ('ACCUWEATHER: \n')
 print (f'TEMPERATURE: {html.unescape(accu_temp)} \n')
-
+print (f'PHRASE: {html.unescape(accu_phrase)} \n')
 
 
 
